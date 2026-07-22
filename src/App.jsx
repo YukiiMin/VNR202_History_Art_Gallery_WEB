@@ -50,7 +50,7 @@ function App() {
 
         <footer className="text-center py-6 bg-black/50 backdrop-blur-md text-white text-sm border-t border-white/10">
           <p>
-            © 2026 Bảo tàng Số: Tư tưởng Hồ Chí Minh về Đại đoàn kết toàn dân
+            © 2026 Bảo tàng Số: Việt Nam: 30 kháng chiến Chống xâm lược
             tộc
           </p>
         </footer>

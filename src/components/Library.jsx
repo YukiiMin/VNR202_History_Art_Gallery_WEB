@@ -69,10 +69,10 @@ const Library = () => {
             className="text-center mb-16"
           >
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-black text-gradient mb-4">
-              Hành Trình Di Sản
+              Hành Trình Chống Giặc Xâm Lược
             </h1>
             <p className="text-lg text-gray-600">
-              Tư tưởng Hồ Chí Minh về Đại đoàn kết toàn dân tộc
+              Việt Nam: 30 kháng chiến Chống xâm lược
             </p>
           </motion.div>
 
@@ -85,6 +85,23 @@ const Library = () => {
             transition={{ duration: 0.5 }}
             className="space-y-8"
           >
+            {/* Background Image */}
+            {currentSection.bgImage && (
+              <div
+                className="relative w-full h-64 md:h-80 lg:h-96 rounded-3xl overflow-hidden shadow-heritage-lg mb-8"
+                aria-hidden="true"
+              >
+                <div
+                  className="absolute inset-0 bg-cover bg-center"
+                  style={{
+                    backgroundImage: `url(${currentSection.bgImage})`,
+                    opacity: 0.5,
+                  }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+              </div>
+            )}
+
             {/* Section Header */}
             <SectionHeader
               icon={currentSection.icon}

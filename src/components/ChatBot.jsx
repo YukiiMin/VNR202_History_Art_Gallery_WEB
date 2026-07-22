@@ -5,6 +5,32 @@ const VA_AVATAR = '/ChatBot_Assitant.png'
 const WEBHOOK_URL =
   'https://yukiimin.app.n8n.cloud/webhook/91bbf0c2-9f69-49dc-9be7-a85c43797b24'
 
+/**
+ * Làm sạch output AI: bỏ các dấu markdown (*, **, _, #) và chuyển bullet
+ * markdown (- item, * item) thành ký tự "•" để hiển thị đẹp hơn.
+ */
+const sanitizeMarkdown = (raw) => {
+  if (!raw) return ''
+  return raw
+    .replace(/\r\n/g, '\n')
+    // Bold/italic: **text**, *text*, __text__, _text_
+    .replace(/\*\*([^*]+)\*\*/g, '$1')
+    .replace(/__([^_]+)__/g, '$1')
+    .replace(/(^|[^*])\*([^*\n]+)\*/g, '$1$2')
+    .replace(/(^|[^_])_([^_\n]+)_/g, '$1$2')
+    // Heading: ### text -> text
+    .replace(/^#{1,6}\s*/gm, '')
+    // Danh sách markdown ở đầu dòng: "- item", "* item", "+ item"
+    .replace(/^\s*[-*+]\s+/gm, '• ')
+    // Blockquote
+    .replace(/^\s*>\s?/gm, '')
+    // Loại bỏ dấu ` code
+    .replace(/`([^`]+)`/g, '$1')
+    // Gom nhiều dòng trống liên tiếp
+    .replace(/\n{3,}/g, '\n\n')
+    .trim()
+}
+
 const suggestionPrompts = [
   {
     id: 1,
@@ -139,7 +165,7 @@ const getReplyFromWebhook = async (userText) => {
 
       if (!res.ok) {
         console.error('Webhook HTTP Error:', res.status);
-        return 'Server đang bận, các Cóc FPT thử lại sau nhé!';
+        return sanitizeMarkdown('Server đang bận, các Cóc FPT thử lại sau nhé!');
       }
 
       const data = await res.json();
@@ -149,11 +175,12 @@ const getReplyFromWebhook = async (userText) => {
       const reply = data.output || data.text || data.response || data.message;
 
       if (reply) {
-        return typeof reply === 'string' ? reply : JSON.stringify(reply);
+        const raw = typeof reply === 'string' ? reply : JSON.stringify(reply);
+        return sanitizeMarkdown(raw);
       }
 
-      if (typeof data === 'string') return data;
-      if (data.output?.text) return data.output.text;
+      if (typeof data === 'string') return sanitizeMarkdown(data);
+      if (data.output?.text) return sanitizeMarkdown(data.output.text);
 
       return 'Đã nhận phản hồi nhưng không đọc được. Các Cóc FPT thử hỏi cách khác nhé!';
     } catch (error) {
