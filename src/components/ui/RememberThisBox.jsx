@@ -1,30 +1,21 @@
-import { motion } from 'framer-motion'
 import PropTypes from 'prop-types'
 
 /**
- * RememberThisBox - Displays key points to remember with dashed border
+ * RememberThisBox - Câu kết của section.
+ * Thiết kế: full-width ngăn, dùng serif lớn, ít trang trí — để nội dung là trung tâm.
  */
 const RememberThisBox = ({ content }) => {
   if (!content) return null
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
-      className="remember-box mt-8 p-5 rounded-xl border-2 border-dashed border-red-300 bg-gradient-to-br from-red-50 to-pink-50 text-center"
-    >
-      <div className="flex flex-col items-center gap-2">
-        <div className="text-3xl">✨</div>
-        <div className="text-sm font-bold text-primary-red uppercase tracking-wide">
-          GHI NHỚ
-        </div>
-        <p className="text-base font-semibold text-primary-red leading-relaxed max-w-2xl">
-          {content}
-        </p>
+    <aside className="my-10 px-6 py-8 border border-red-200 bg-gradient-to-br from-red-50/60 to-amber-50/40 max-w-3xl">
+      <div className="text-[10px] font-bold uppercase tracking-[0.25em] text-red-700 mb-3">
+        ◇ Ghi nhớ
       </div>
-    </motion.div>
+      <p className="text-lg md:text-xl font-serif font-semibold text-gray-900 leading-snug">
+        {content}
+      </p>
+    </aside>
   )
 }
 

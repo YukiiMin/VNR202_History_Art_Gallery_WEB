@@ -1,32 +1,19 @@
-import { motion } from 'framer-motion'
 import PropTypes from 'prop-types'
 
 /**
- * ExampleBox - Displays practical examples with blue accent
+ * ExampleBox - Ví dụ / câu chuyện minh họa cụ thể.
+ * Thiết kế: kín đáo, sans-serif, tone khác quote (dùng blue thay vì gold).
  */
 const ExampleBox = ({ example }) => {
   if (!example) return null
 
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4 }}
-      className="example-box my-3 p-4 pl-5 bg-blue-50 border-l-3 border-blue-400 rounded-r-lg"
-    >
-      <div className="flex items-start gap-2">
-        <span className="text-xl flex-shrink-0">🔍</span>
-        <div className="flex-1">
-          <span className="text-sm font-semibold text-blue-700 mr-2">
-            Ví dụ:
-          </span>
-          <span className="text-sm text-gray-700 leading-relaxed">
-            {example}
-          </span>
-        </div>
+    <div className="my-6 pl-5 border-l-2 border-blue-400/70">
+      <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-blue-700 mb-1">
+        Ví dụ
       </div>
-    </motion.div>
+      <p className="text-base text-gray-700 leading-relaxed">{example}</p>
+    </div>
   )
 }
 
